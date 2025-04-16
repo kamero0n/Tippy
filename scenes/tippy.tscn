@@ -7,15 +7,15 @@
 [node name="Tippy" type="Node2D"]
 texture_filter = 1
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("1_u17a7")]
-position = Vector2(89, 128)
+[node name="Tippy" parent="." instance=ExtResource("1_u17a7")]
+position = Vector2(90, 206)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(90, 83)
 zoom = Vector2(2, 2)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(89, 162)
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(89, 208)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
 shape = SubResource("WorldBoundaryShape2D_u17a7")
