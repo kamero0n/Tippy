@@ -1,11 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://bjfjj6q88n3m1"]
+[gd_scene load_steps=3 format=3 uid="uid://bjfjj6q88n3m1"]
 
 [ext_resource type="PackedScene" uid="uid://btabfijb1ieil" path="res://scenes/player.tscn" id="1_u17a7"]
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_u17a7"]
+
 [node name="Tippy" type="Node2D"]
+texture_filter = 1
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_u17a7")]
 position = Vector2(89, 128)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(90, 83)
+zoom = Vector2(2, 2)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(89, 162)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_u17a7")
