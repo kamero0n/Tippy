@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfpa61l6m8k68"]
+
+[ext_resource type="Script" uid="uid://wcc7e632mg1w" path="res://scripts/counter.gd" id="1_8e5hq"]
+[ext_resource type="Texture2D" uid="uid://d22yhs8e7oolg" path="res://icon.svg" id="1_sc7mx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sc7mx"]
+size = Vector2(77, 97.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8e5hq"]
+size = Vector2(121, 125)
+
+[node name="counter" type="StaticBody2D"]
+script = ExtResource("1_8e5hq")
+
+[node name="counter_image" type="Sprite2D" parent="."]
+texture = ExtResource("1_sc7mx")
+
+[node name="counter_area" type="Area2D" parent="."]
+position = Vector2(78, 1)
+collision_layer = 2
+
+[node name="counter_area_collider" type="CollisionShape2D" parent="counter_area"]
+position = Vector2(26, -17)
+shape = SubResource("RectangleShape2D_sc7mx")
+
+[node name="counter_collider" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_8e5hq")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="body_entered" from="counter_area" to="." method="_on_counter_area_body_entered"]
