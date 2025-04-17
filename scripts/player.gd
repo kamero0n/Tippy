@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 
 const SPEED = 300.0
+const SPRINT_SPEED = 400.0
 const JUMP_VELOCITY = -400.0
 
 @onready var animated_sprite = $body
@@ -9,7 +10,9 @@ const JUMP_VELOCITY = -400.0
 @onready var tray = $tray
 @onready var tray_sprite = $tray/tray_image
 
+var curr_speed = SPEED
 
+var sprinting = false
 var carrying_dish = false
 var facing_right = false
 
@@ -35,6 +38,10 @@ func _physics_process(delta: float) -> void:
 	# Handle jump. for now... no jump :[
 	#if Input.is_action_just_pressed("jump") and is_on_floor():
 		#velocity.y = JUMP_VELOCITY
+	
+	# check if we are sprinting
+	sprinting = Input.is_action_pressed("sprint")
+	curr_speed = SPRINT_SPEED if sprinting else SPEED
 
 	# Get the input direction: -1, 0, 1
 	var direction := Input.get_axis("move_left", "move_right")
@@ -75,12 +82,15 @@ func _physics_process(delta: float) -> void:
 	
 	# apply movement
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = direction * curr_speed
 	
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, curr_speed)
 
 	move_and_slide()
+	
+	if carrying_dish:
+		tray.update_balance(delta, velocity, sprinting, direction)
 
 
 func give_dish():
