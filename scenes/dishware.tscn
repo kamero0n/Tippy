@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://j7jc02emwqc2"]
+[gd_scene load_steps=4 format=3 uid="uid://j7jc02emwqc2"]
 
 [ext_resource type="Texture2D" uid="uid://cfhr0n4yeicb7" path="res://assets/glassware/spaghetPlate.png" id="1_8nvhs"]
+[ext_resource type="AudioStream" uid="uid://bg2wqe8wqivwm" path="res://assets/sound effects/plate-put-down-88789.mp3" id="2_s3n4y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8nvhs"]
 size = Vector2(20, 6)
@@ -13,3 +14,7 @@ texture = ExtResource("1_8nvhs")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 11)
 shape = SubResource("RectangleShape2D_8nvhs")
+
+[node name="plate_stack_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_s3n4y")
+volume_db = -10.0

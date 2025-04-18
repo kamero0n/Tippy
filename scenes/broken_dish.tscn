@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://ct7t51ao7yg3e"]
+
+[ext_resource type="Texture2D" uid="uid://bwgtxmhc0ep4f" path="res://assets/glassware/brokenPlate.png" id="1_3ed62"]
+[ext_resource type="AudioStream" uid="uid://cyh8egig40twu" path="res://assets/sound effects/Plate Breaking Sound Effect.wav" id="2_rhdsq"]
+
+[node name="BrokenDish" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_3ed62")
+
+[node name="dish_break_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_rhdsq")
