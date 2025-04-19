@@ -3,6 +3,12 @@ extends Area2D
 signal dish_fallen(dish_position)
 
 @onready var tray = $"."
+@onready var balance_face = $"balance_face"
+
+var face_happy = preload("res://assets/UI/happy_tippy.png")
+var face_neutral = preload("res://assets/UI/worried_tippy.png")
+var face_worried = preload("res://assets/UI/veryworried_tippy.png")
+var face_panic = preload("res://assets/UI/dead_tippy.png")
 
 var broken_dish_scene = preload("res://scenes/broken_dish.tscn") # shout out https://www.youtube.com/watch?v=s14LA_fbMoI&ab_channel=%231SoundFX%21
 
@@ -21,12 +27,13 @@ var recovery_rate = 30.0 # how quick balance recovers per second
 # impact balance factors (think of a % of affecting balance)
 var sprint_impact = 30.0 # %
 var direction_change_impact = 10.0 # %
-var walk_impact = 10.0 # %
-var dish_stack_multiplier = 1.1 # each dish inc impact by this factor
+var walk_impact = 5.0 # %
+var dish_stack_multiplier = 1.4 # each dish inc impact by this factor
 
 # movement variables
 var curr_slide_offset = 0.0 # curr x offset of the dishes
 var last_move_dir = 0 # either (-1, 0, 1)
+var last_slide_offset = 0.0
 
 # smooth movement
 var dish_target_positions = []
@@ -39,7 +46,9 @@ func _process(delta: float) -> void:
 			var dish = stacked_dishes[i]
 			
 			dish.position = dish.position.lerp(dish_target_positions[i], smooth_speed * delta)
-			
+	
+	update_balance_face()
+	
 	if stacked_dishes.size() > 0:
 		var top_dish = stacked_dishes[stacked_dishes.size() - 1]
 		if abs(top_dish.position.x) > tray_edge_limit:
@@ -60,8 +69,8 @@ func add_dish(dish_scene):
 	var dish = dish_scene.instantiate()
 	
 	# play sound here?
-	if dish.has_node("plate_stack_sound"):
-		dish.get_node("plate_stack_sound").play()
+	if has_node("plate_stack_sound"):
+		get_node("plate_stack_sound").play()
 	
 	# set new dish pos
 	var new_tray_pos
@@ -148,8 +157,71 @@ func update_dish_positions():
 			# calc target pos with offset
 			var target_pos = base_pos + Vector2(amplified_offset, 0.0)
 			
+			
 			# update target pos
 			dish_target_positions[i] = target_pos
+			
+			# apply red tint based on edge
+			var dish = stacked_dishes[i]
+			var edge_prox = abs(target_pos.x) / tray_edge_limit
+			
+			if edge_prox > 0.4:
+				var red_amount = min(1.0, edge_prox * 1.5)
+				dish.modulate = Color(1.0, 1.0 - red_amount, 1.0 - red_amount)
+			else:
+				dish.modulate = Color(1.0, 1.0, 1.0)
+
+func update_balance_face():
+	# skip if no face sprite
+	if !balance_face || stacked_dishes.size() <= 0:
+		if balance_face:
+			balance_face.visible = false
+		return
+	
+	# get player's facing dir
+	var facing_right = get_parent().facing_right
+	
+	# position UI based on facing dir
+	var base_x_pos
+	if facing_right:
+		base_x_pos = -30
+	else:
+		base_x_pos = 30
+	var base_y_pos = -60
+	
+	# hide if no dishes
+	balance_face.visible = true
+	
+	# calc dish stability
+	var top_dish = stacked_dishes[stacked_dishes.size() - 1]
+	
+	# track velocity of edge movement
+	var edge_prox = abs(top_dish.position.x) / tray_edge_limit
+	
+	var dish_movement_trend = abs(curr_slide_offset - last_slide_offset) * 10.0
+	if sign(curr_slide_offset) == sign(last_slide_offset) && abs(curr_slide_offset) > abs(last_slide_offset):
+		edge_prox += dish_movement_trend
+	
+	edge_prox = clamp(edge_prox, 0.0, 1.0)
+	
+	if edge_prox <= 0.3:
+		balance_face.texture = face_happy
+	elif edge_prox <= 0.5:
+		balance_face.texture = face_neutral
+	elif edge_prox <= 0.75:
+		balance_face.texture = face_worried
+	else:
+		balance_face.texture = face_panic
+	
+	var shake_offset = 0
+	if edge_prox > 0.5:
+		var shake_intensity = 1.0 + (edge_prox - 0.5) * 8.0
+		shake_offset = sin(Time.get_ticks_msec() * 0.02) * shake_intensity
+	
+	balance_face.position = Vector2(base_x_pos + shake_offset, base_y_pos)
+	
+	last_slide_offset = curr_slide_offset
+		
 
 # the big fella
 func update_balance(delta, player_velocity, is_sprinting, direction):
@@ -158,9 +230,9 @@ func update_balance(delta, player_velocity, is_sprinting, direction):
 		return
 	
 	# const small wobble
-	var wobble_amount = 3.0
-	var constant_wobble = sin(Time.get_ticks_msec() * 0.01) * wobble_amount * direction
-	
+	#var wobble_amount = 3.0
+	#var constant_wobble = sin(Time.get_ticks_msec() * 0.01) * wobble_amount * direction
+	#
 	# detect direction changes
 	var direction_changed = (direction != 0 and direction != last_move_dir)
 	
@@ -208,11 +280,15 @@ func update_balance(delta, player_velocity, is_sprinting, direction):
 	var balance_percentage = balance / max_balance
 	
 	# compute target slide w/ wobble
-	var target_slide = (max_slide * balance_percentage * slide_direction) + constant_wobble
+	var target_slide = (max_slide * balance_percentage * slide_direction) # + constant_wobble
 	
 	# smooth transition to new slide amount
 	var slide_smooth = 12.0 if direction == 0 else 8.0
 	curr_slide_offset = lerp(curr_slide_offset, target_slide, slide_smooth * delta)
+	
+		
+	# update balance face
+	update_balance_face()
 	
 	# update dish positions with new slide amount
 	update_dish_positions()

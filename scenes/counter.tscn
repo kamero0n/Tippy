@@ -1,26 +1,26 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfpa61l6m8k68"]
 
 [ext_resource type="Script" uid="uid://wcc7e632mg1w" path="res://scripts/counter.gd" id="1_8e5hq"]
-[ext_resource type="Texture2D" uid="uid://d22yhs8e7oolg" path="res://icon.svg" id="1_sc7mx"]
+[ext_resource type="Texture2D" uid="uid://dnh7v6uk0uusi" path="res://assets/misc/counter.png" id="2_8e5hq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sc7mx"]
-size = Vector2(77, 97.5)
+size = Vector2(27.75, 48.875)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8e5hq"]
-size = Vector2(121, 125)
+size = Vector2(18, 46)
 
 [node name="counter" type="StaticBody2D"]
 script = ExtResource("1_8e5hq")
 
 [node name="counter_image" type="Sprite2D" parent="."]
-texture = ExtResource("1_sc7mx")
+texture = ExtResource("2_8e5hq")
 
 [node name="counter_area" type="Area2D" parent="."]
 position = Vector2(78, 1)
 collision_layer = 2
 
 [node name="counter_area_collider" type="CollisionShape2D" parent="counter_area"]
-position = Vector2(26, -17)
+position = Vector2(-53.875, -23.5625)
 shape = SubResource("RectangleShape2D_sc7mx")
 
 [node name="counter_collider" type="CollisionShape2D" parent="."]
