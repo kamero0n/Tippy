@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3qmoechdtco3"]
+
+[ext_resource type="Texture2D" uid="uid://0e5alcgidubf" path="res://assets/misc/npc_base.png" id="1_ktfjk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xss0h"]
+size = Vector2(30, 25)
+
+[node name="Area2D" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ktfjk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -9.5)
+shape = SubResource("RectangleShape2D_xss0h")

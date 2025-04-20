@@ -21,7 +21,5 @@ func _process(delta: float) -> void:
 			print("grabbed dish")
 			
 			emit_signal("dish_taken", dish)
-			
-			# reset state
-			atCounter = false
+
 			
