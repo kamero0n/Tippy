@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=4 uid="uid://bjfjj6q88n3m1"]
+[gd_scene load_steps=9 format=4 uid="uid://bjfjj6q88n3m1"]
 
+[ext_resource type="Script" uid="uid://bamx2cn42c37g" path="res://scripts/game_manager.gd" id="1_l42us"]
 [ext_resource type="PackedScene" uid="uid://btabfijb1ieil" path="res://scenes/player.tscn" id="1_u17a7"]
 [ext_resource type="Texture2D" uid="uid://dsfic81tatyuo" path="res://assets/tileset/world_tileset_tippy.png" id="2_5xltu"]
 [ext_resource type="PackedScene" uid="uid://cfpa61l6m8k68" path="res://scenes/counter.tscn" id="3_5xltu"]
@@ -144,8 +145,9 @@ texture = ExtResource("2_5xltu")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_wixx3")
 
-[node name="Tippy" type="Node2D"]
+[node name="game_manager" type="Node2D"]
 texture_filter = 1
+script = ExtResource("1_l42us")
 
 [node name="table" parent="." instance=ExtResource("4_bkei7")]
 position = Vector2(222, 159)

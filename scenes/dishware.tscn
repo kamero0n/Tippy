@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://j7jc02emwqc2"]
+[gd_scene load_steps=4 format=3 uid="uid://j7jc02emwqc2"]
 
 [ext_resource type="Texture2D" uid="uid://cfhr0n4yeicb7" path="res://assets/glassware/spaghetPlate.png" id="1_8nvhs"]
+[ext_resource type="Script" uid="uid://dd8o727ijvoro" path="res://scripts/dishware.gd" id="1_s3n4y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8nvhs"]
 size = Vector2(20, 6)
 
-[node name="Area2D" type="Area2D"]
+[node name="dish" type="Area2D"]
+script = ExtResource("1_s3n4y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_8nvhs")

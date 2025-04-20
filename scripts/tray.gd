@@ -28,7 +28,7 @@ var recovery_rate = 30.0 # how quick balance recovers per second
 var sprint_impact = 30.0 # %
 var direction_change_impact = 10.0 # %
 var walk_impact = 5.0 # %
-var dish_stack_multiplier = 1.4 # each dish inc impact by this factor
+var dish_stack_multiplier = 1.6 # each dish inc impact by this factor
 
 # movement variables
 var curr_slide_offset = 0.0 # curr x offset of the dishes
@@ -38,6 +38,13 @@ var last_slide_offset = 0.0
 # smooth movement
 var dish_target_positions = []
 var smooth_speed = 5.0
+
+func _ready() -> void:
+	# connect fallen dish to game manager 
+	var game_manager = get_parent().get_parent().get_node("game_manager")
+	if game_manager:
+		print("did i work")
+		connect("dish_fallen", game_manager._on_dish_fallen)
 
 func _process(delta: float) -> void:
 	# apply smooth movement to dishes

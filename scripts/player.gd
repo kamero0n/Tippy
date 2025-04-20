@@ -27,7 +27,7 @@ func _ready() -> void:
 func _input(event):
 	# handle if we press E which likely means we need to drop the dish
 	if event.is_action_pressed("drop"):
-		give_dish()
+		deliver_dish()
 
 
 func _physics_process(delta: float) -> void:
@@ -93,25 +93,30 @@ func _physics_process(delta: float) -> void:
 		tray.update_balance(delta, velocity, sprinting, direction)
 
 
-func give_dish():
-	# get the top dish from the tray
-	var dish = tray.remove_top_dish()
+func deliver_dish():
+	# check if we're near a customer w/ active order
+	var customers = get_tree().get_nodes_in_group("customers")
+	for customer in customers:
+		# check dist to customer
+		var distance = global_position.distance_to(customer.global_position)
+		if distance < 100 and customer.has_active_order:
+			# get the top dish from the tray
+			var dish = tray.remove_top_dish()
+			
+			if dish:
+				# signal customer that they received their order
+				customer.complete_order()
+				
+				# remove dish from scene
+				dish.queue_free()
+				
+				# if no dishes left, hide tray
+				if tray.stacked_dishes.size() <= 0:
+					tray_sprite.visible = false
+					carrying_dish = false
+				
+				return
 	
-	if dish:
-		# detach from tray
-		dish.get_parent().remove_child(dish)
-		
-		# add to main scene
-		get_parent().add_child(dish)
-		
-		# random pos for now
-		dish.global_position = global_position + Vector2(0, 10)
-		
-		# if no dishes left, hide tray
-		if tray.stacked_dishes.size() <= 0.0:
-			tray_sprite.visible = false
-			carrying_dish = false
-
 
 func _on_counter_dish_taken(dish_scene: PackedScene) -> void:
 	# if this is the first dish, show the tray
