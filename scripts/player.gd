@@ -17,6 +17,8 @@ var carrying_dish = false
 var facing_right = false
 
 func _ready() -> void:
+	add_to_group("player")
+	
 	# limit the camera to the left
 	camera.limit_left = global_position.x - 250
 	

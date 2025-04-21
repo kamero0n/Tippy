@@ -9,9 +9,12 @@ var dish = preload("res://scenes/dishware.tscn")
 
 func _on_counter_area_body_entered(body: Node2D) -> void:
 	# check if the player entered the area of the counter
-	if atCounter == false:
+	if body.is_in_group("player"):
 		atCounter = true
-		
+
+func _on_counter_area_body_exited(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		atCounter = false
 		
 func _process(delta: float) -> void:
 	if atCounter == true:
