@@ -21,8 +21,6 @@ func _process(delta: float) -> void:
 		
 		# check if the player is pressing the interact key
 		if Input.is_action_just_pressed("pick_up"):
-			print("grabbed dish")
-			
 			emit_signal("dish_taken", dish)
 
 			

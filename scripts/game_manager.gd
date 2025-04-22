@@ -19,14 +19,15 @@ var level_ended = false
 # game state
 var score = 0
 var score_label = null
-var customer = null
 var available_dishes = ["spaghet"]
 
+@onready var customer_manager = $customer_manager
 @onready var counter = $counter
 
+
 func _ready():
-	# get ref to customer
-	customer = $customer
+	## get ref to customer
+	#customer = $customer
 	
 	# get ref to timer
 	level_timer = $UI/timer_node/timer
@@ -41,13 +42,15 @@ func _ready():
 	if counter:
 		counter.connect("dish_taken", _on_dish_taken)
 	
-	if customer:
-		customer.connect("order_delivered", _on_order_delivered)
-		customer.connect("order_timeout", _on_order_timeout)
+	if customer_manager:
+		customer_manager.connect("order_delivered", _on_order_delivered)
+		customer_manager.connect("order_timeout", _on_order_timeout)
+		customer_manager.connect("order_created", _on_customer_order_taken)
 		
 	# start level
 	start_level()
 		
+
 
 func start_level():
 	level_started = true
@@ -63,32 +66,29 @@ func start_level():
 		level_timer.start_timer()
 	
 	# start customer orders
-	start_customer_order()
+	if customer_manager:
+		customer_manager.start()
+
 
 func _on_level_timeout():
 	level_ended = true
 	level_timer.stop_timer()
 	
+	customer_manager.stop()
+	
 	print("level time ended!")
+	
 
-# start an order for customer
-func start_customer_order():
-	if customer and !customer.has_active_order:
-		customer.start_order()
-		
-		emit_signal("order_created", customer)
-		print("order created for customer!")
-		
+func _on_customer_order_taken(customer):
+	# print("player took the order!")
+	emit_signal("order_created", customer)
+
 # called when player takes a dish from counter
 func _on_dish_taken(dish):
 	print("player took dish")
-	
-	# if customer doesn't have an order, start one
-	if customer and !customer.has_active_order:
-		start_customer_order()
 
 # called when customer gets order
-func _on_order_delivered(delivery_time):
+func _on_order_delivered(customer, delivery_time):
 	# calc tip based on time
 	var tip = base_tip_amount
 	
@@ -106,25 +106,36 @@ func _on_order_delivered(delivery_time):
 
 	emit_signal("order_completed", customer, tip)
 	
-	# wait before starting a new order
-	await get_tree().create_timer(2.0).timeout
-	start_customer_order()
+	## wait before starting a new order
+	#await get_tree().create_timer(2.0).timeout
+	#start_customer_order()
 	
 # called when order times out
-func _on_order_timeout():
+func _on_order_timeout(customer):
 	print("order time out! MAD CUSTOMER!!!")
 	
 	# add penalty (should be the same...as breaking a plate?)
 	score -= dish_break_penalty
 	
+	# update the score
+	update_score()
+	
 	emit_signal("order_failed", customer)
 	
-	await get_tree().create_timer(3.0).timeout
-	start_customer_order()	
+	#await get_tree().create_timer(3.0).timeout
+	#start_customer_order()	
 
 # called when dish falls from tray
 func _on_dish_fallen(dish_position):
 	score -= dish_break_penalty
 	
+	# update the score
+	update_score()
+	
+	print("dish broken")
+	
 func update_score():
-	score_label.text = str(int(score))
+	if score >= 0.0:
+		score_label.text = str(int(score))
+	else:
+		score_label.text = "0"

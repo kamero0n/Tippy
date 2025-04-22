@@ -41,9 +41,9 @@ var smooth_speed = 5.0
 
 func _ready() -> void:
 	# connect fallen dish to game manager 
-	var game_manager = get_parent().get_parent().get_node("game_manager")
+	var game_manager = get_parent().get_parent().get_parent().get_node("game_manager")
 	if game_manager:
-		print("did i work")
+		# print("connecting to game manager")
 		connect("dish_fallen", game_manager._on_dish_fallen)
 
 func _process(delta: float) -> void:

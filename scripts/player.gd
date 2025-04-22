@@ -19,7 +19,7 @@ var facing_right = false
 func _ready() -> void:
 	add_to_group("player")
 	
-	# limit the camera to the left
+	# limit the camera for left
 	camera.limit_left = global_position.x - 250
 	
 	# hide tray
@@ -30,6 +30,9 @@ func _input(event):
 	# handle if we press E which likely means we need to drop the dish
 	if event.is_action_pressed("drop"):
 		deliver_dish()
+	
+	if event.is_action_pressed("take_order"):
+		pass
 
 
 func _physics_process(delta: float) -> void:
@@ -93,6 +96,10 @@ func _physics_process(delta: float) -> void:
 	
 	if carrying_dish:
 		tray.update_balance(delta, velocity, sprinting, direction)
+		
+	if global_position.x > 1400.0:
+		global_position.x = 1400.0
+	
 
 
 func deliver_dish():

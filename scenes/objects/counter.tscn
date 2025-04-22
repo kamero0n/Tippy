@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dei1ptf0wnxeq" path="res://assets/misc/betterCounter.png" id="2_8e5hq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sc7mx"]
-size = Vector2(37.2102, 74.2355)
+size = Vector2(75.3036, 91.0935)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8e5hq"]
 size = Vector2(53.8674, 116)
@@ -21,7 +21,7 @@ position = Vector2(78, 1)
 collision_layer = 2
 
 [node name="counter_area_collider" type="CollisionShape2D" parent="counter_area"]
-position = Vector2(-27.6969, -33.0524)
+position = Vector2(-11.3267, -26.9589)
 scale = Vector2(0.859477, 0.722923)
 shape = SubResource("RectangleShape2D_sc7mx")
 
@@ -31,3 +31,4 @@ shape = SubResource("RectangleShape2D_8e5hq")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="body_entered" from="counter_area" to="." method="_on_counter_area_body_entered"]
+[connection signal="body_exited" from="counter_area" to="." method="_on_counter_area_body_exited"]
