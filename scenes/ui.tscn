@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://eig3kqs6pya2"]
+
+[ext_resource type="PackedScene" uid="uid://b8i8la80faf3n" path="res://scenes/level_timer.tscn" id="1_nt7q6"]
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="timer_node" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="timer" parent="timer_node" instance=ExtResource("1_nt7q6")]
+position = Vector2(-22, 14)
+
+[node name="dishes_delivered" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -63.0
+offset_top = 47.0
+offset_right = -23.0
+offset_bottom = 87.0
+grow_horizontal = 0
+tooltip_text = "
+"
+
+[node name="dishes_label" type="RichTextLabel" parent="dishes_delivered"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+fit_content = true
+scroll_active = false
+autowrap_mode = 0

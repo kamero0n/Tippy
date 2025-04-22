@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Tippy"
-run/main_scene="res://scenes/tippy_test.tscn"
+run/main_scene="uid://bjfjj6q88n3m1"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 

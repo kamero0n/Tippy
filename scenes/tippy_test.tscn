@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://bjfjj6q88n3m1"]
+[gd_scene load_steps=10 format=4 uid="uid://bjfjj6q88n3m1"]
 
 [ext_resource type="Script" uid="uid://bamx2cn42c37g" path="res://scripts/game_manager.gd" id="1_3b8a0"]
 [ext_resource type="PackedScene" uid="uid://len0r378bqub" path="res://scenes/table.tscn" id="2_3y8tr"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://btabfijb1ieil" path="res://scenes/player.tscn" id="4_nrc6v"]
 [ext_resource type="PackedScene" uid="uid://cfpa61l6m8k68" path="res://scenes/counter.tscn" id="5_wltgu"]
 [ext_resource type="Texture2D" uid="uid://dsfic81tatyuo" path="res://assets/tileset/world_tileset_tippy.png" id="6_msl7m"]
+[ext_resource type="PackedScene" uid="uid://eig3kqs6pya2" path="res://scenes/ui.tscn" id="7_pekua"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wixx3"]
 texture = ExtResource("6_msl7m")
@@ -161,6 +162,7 @@ position = Vector2(90, 206)
 [node name="Camera2D" type="Camera2D" parent="tippy"]
 position = Vector2(-38, -139)
 zoom = Vector2(2, 2)
+position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
 [node name="Floor" type="TileMapLayer" parent="."]
@@ -173,5 +175,7 @@ tile_set = SubResource("TileSet_l42us")
 [node name="Counter" parent="." instance=ExtResource("5_wltgu")]
 position = Vector2(-154, 172)
 scale = Vector2(0.6, 0.733)
+
+[node name="UI" parent="." instance=ExtResource("7_pekua")]
 
 [connection signal="dish_taken" from="Counter" to="tippy" method="_on_counter_dish_taken"]

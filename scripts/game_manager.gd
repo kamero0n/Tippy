@@ -11,8 +11,14 @@ var min_tip_amount = 5.0
 var tip_deduction_per_second = 0.5
 var dish_break_penalty = 5.0
 
+var level_duration = 60.0
+var level_timer = null
+var level_started = false
+var level_ended = false
+
 # game state
 var score = 0
+var score_label = null
 var customer = null
 var available_dishes = ["spaghet"]
 
@@ -22,6 +28,15 @@ func _ready():
 	# get ref to customer
 	customer = $customer
 	
+	# get ref to timer
+	level_timer = $UI/timer_node/timer
+	if level_timer:
+		level_timer.connect("timeout", _on_level_timeout)
+		level_timer.set_duration(level_duration)
+	
+	# get ref to score label
+	score_label = $UI/dishes_delivered/dishes_label
+	
 	# connect signals
 	if counter:
 		counter.connect("dish_taken", _on_dish_taken)
@@ -30,9 +45,31 @@ func _ready():
 		customer.connect("order_delivered", _on_order_delivered)
 		customer.connect("order_timeout", _on_order_timeout)
 		
-		# start w/ active order
-		start_customer_order()
+	# start level
+	start_level()
+		
+
+func start_level():
+	level_started = true
+	level_ended = false
+	score = 0
 	
+	# set initial score
+	if score_label:
+		score_label.text = str(score)
+	
+	# start timer
+	if level_timer:
+		level_timer.start_timer()
+	
+	# start customer orders
+	start_customer_order()
+
+func _on_level_timeout():
+	level_ended = true
+	level_timer.stop_timer()
+	
+	print("level time ended!")
 
 # start an order for customer
 func start_customer_order():
@@ -63,6 +100,7 @@ func _on_order_delivered(delivery_time):
 	
 	# add to score
 	score += tip
+	update_score()
 	
 	print("order completed! tip: " + str(tip) + " | total score " + str(score))
 
@@ -87,3 +125,6 @@ func _on_order_timeout():
 # called when dish falls from tray
 func _on_dish_fallen(dish_position):
 	score -= dish_break_penalty
+	
+func update_score():
+	score_label.text = str(int(score))

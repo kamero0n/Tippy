@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8i8la80faf3n"]
+
+[ext_resource type="Script" uid="uid://cf55ownagk0fn" path="res://scripts/level_timer.gd" id="1_sl7wx"]
+
+[node name="timer" type="Node2D"]
+script = ExtResource("1_sl7wx")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
