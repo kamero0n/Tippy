@@ -10,7 +10,7 @@ var face_neutral = preload("res://assets/UI/worried_tippy.png")
 var face_worried = preload("res://assets/UI/veryworried_tippy.png")
 var face_panic = preload("res://assets/UI/dead_tippy.png")
 
-var broken_dish_scene = preload("res://scenes/broken_dish.tscn") # shout out https://www.youtube.com/watch?v=s14LA_fbMoI&ab_channel=%231SoundFX%21
+var broken_dish_scene = preload("res://scenes/objects/broken_dish.tscn") # shout out https://www.youtube.com/watch?v=s14LA_fbMoI&ab_channel=%231SoundFX%21
 
 var stacked_dishes = []
 var max_dishes = 5
@@ -54,7 +54,7 @@ func _process(delta: float) -> void:
 			
 			dish.position = dish.position.lerp(dish_target_positions[i], smooth_speed * delta)
 	
-	update_balance_face()
+	# update_balance_face()
 	
 	if stacked_dishes.size() > 0:
 		var top_dish = stacked_dishes[stacked_dishes.size() - 1]
@@ -295,7 +295,7 @@ func update_balance(delta, player_velocity, is_sprinting, direction):
 	
 		
 	# update balance face
-	update_balance_face()
+	# update_balance_face()
 	
 	# update dish positions with new slide amount
 	update_dish_positions()

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://duj42rjus2dfy"]
+
+[ext_resource type="AudioStream" uid="uid://cqfjqfnsns1dj" path="res://assets/music/JAZZ⧸BLUES MUSIC Upbeat Fast ROYALTY FREE Download No Copyright Content ｜ BIG SWING BAND.wav" id="1_gvwq5"]
+
+[node name="Bgmusic" type="AudioStreamPlayer"]
+stream = ExtResource("1_gvwq5")
+volume_db = -10.243
+autoplay = true

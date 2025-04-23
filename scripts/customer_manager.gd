@@ -5,7 +5,7 @@ signal order_delivered(customer, delivery_time)
 signal order_timeout(customer)
 
 @export var min_order_interval: float = 1.0 # min time between orders
-@export var max_order_interval: float = 10.0 # max time between orders
+@export var max_order_interval: float = 8.0 # max time between orders
 @export var max_concurrent_orders: int = 3 # how many orders can happen at the same time?
 
 var customers = []

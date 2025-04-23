@@ -1,0 +1,152 @@
+[gd_scene load_steps=7 format=3 uid="uid://d1hr7788pcbjk"]
+
+[ext_resource type="Script" uid="uid://du7nrsm26wkx1" path="res://scripts/end_level.gd" id="1_3bg3w"]
+[ext_resource type="FontFile" uid="uid://cj5gjh0cn8bvt" path="res://assets/UI/m5x7.ttf" id="1_cq6fe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3bg3w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2hyi"]
+bg_color = Color(0.791999, 0.791999, 0.791999, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qq22q"]
+bg_color = Color(0.678944, 0.678944, 0.678943, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_82l3d"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_size = 5
+
+[node name="EndLevel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3bg3w")
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -125.5
+offset_top = -134.0
+offset_right = 125.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="main" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_cq6fe")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3bg3w")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s2hyi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qq22q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_82l3d")
+text = "Main Menu"
+
+[node name="restart" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_cq6fe")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3bg3w")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s2hyi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qq22q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_82l3d")
+text = "Restart
+"
+
+[node name="title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -244.0
+offset_top = 67.0
+offset_right = 244.0
+offset_bottom = 147.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_cq6fe")
+theme_override_font_sizes/font_size = 100
+text = "Level Complete"
+
+[node name="tips" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -239.0
+offset_top = 179.0
+offset_right = 249.0
+offset_bottom = 259.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_cq6fe")
+theme_override_font_sizes/font_size = 50
+text = "Tips Earned: "
+
+[node name="dishBroke" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -239.0
+offset_top = 236.0
+offset_right = 249.0
+offset_bottom = 316.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_cq6fe")
+theme_override_font_sizes/font_size = 50
+text = "Dishes Broken:"
+
+[node name="totalScore" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -239.0
+offset_top = 291.0
+offset_right = 249.0
+offset_bottom = 371.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_cq6fe")
+theme_override_font_sizes/font_size = 50
+text = "Total Score:"
+
+[connection signal="pressed" from="VBoxContainer/main" to="." method="_on_main_pressed"]
+[connection signal="pressed" from="VBoxContainer/restart" to="." method="_on_restart_pressed"]

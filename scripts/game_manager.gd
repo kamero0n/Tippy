@@ -21,9 +21,14 @@ var score = 0
 var score_label = null
 var available_dishes = ["spaghet"]
 
-@onready var customer_manager = $customer_manager
-@onready var counter = $counter
+# waypoint arrow
+var order_arrow = null
 
+@onready var customer_manager = $customer_manager
+@onready var counter = $Counter
+
+var total_tips_earned = 0
+var total_dishes_broken = 0
 
 func _ready():
 	## get ref to customer
@@ -49,8 +54,6 @@ func _ready():
 		
 	# start level
 	start_level()
-		
-
 
 func start_level():
 	level_started = true
@@ -78,6 +81,14 @@ func _on_level_timeout():
 	
 	print("level time ended!")
 	
+	var global = get_node("/root/Global")
+	global.tips_earned = total_tips_earned
+	global.dishes_broken = total_dishes_broken
+	global.final_score = score
+	
+	# change scene
+	get_tree().change_scene_to_file("res://scenes/end_level.tscn")
+	
 
 func _on_customer_order_taken(customer):
 	# print("player took the order!")
@@ -85,10 +96,14 @@ func _on_customer_order_taken(customer):
 
 # called when player takes a dish from counter
 func _on_dish_taken(dish):
-	print("player took dish")
+	# print("player took dish")
+	pass
 
 # called when customer gets order
 func _on_order_delivered(customer, delivery_time):
+	# base reward
+	var base_reward = 5.0
+	
 	# calc tip based on time
 	var tip = base_tip_amount
 	
@@ -99,10 +114,12 @@ func _on_order_delivered(customer, delivery_time):
 	tip = clamp(tip, min_tip_amount, max_tip_amount)
 	
 	# add to score
-	score += tip
+	score += tip + base_reward
+	total_tips_earned += tip
+	
 	update_score()
 	
-	print("order completed! tip: " + str(tip) + " | total score " + str(score))
+	# print("order completed! tip: " + str(tip) + " | total score " + str(score))
 
 	emit_signal("order_completed", customer, tip)
 	
@@ -115,10 +132,10 @@ func _on_order_timeout(customer):
 	print("order time out! MAD CUSTOMER!!!")
 	
 	# add penalty (should be the same...as breaking a plate?)
-	score -= dish_break_penalty
+	# score -= dish_break_penalty
 	
 	# update the score
-	update_score()
+	# update_score()
 	
 	emit_signal("order_failed", customer)
 	
@@ -127,15 +144,15 @@ func _on_order_timeout(customer):
 
 # called when dish falls from tray
 func _on_dish_fallen(dish_position):
-	score -= dish_break_penalty
+	score = max(0.0, score - dish_break_penalty)
+	total_dishes_broken += 1
 	
 	# update the score
 	update_score()
 	
-	print("dish broken")
+	# print("dish broken")
 	
 func update_score():
-	if score >= 0.0:
-		score_label.text = str(int(score))
-	else:
-		score_label.text = "0"
+	score = max(0.0, score)
+	score_label.text = str(int(score))
+		

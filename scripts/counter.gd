@@ -5,7 +5,7 @@ signal dish_taken
 @onready var counter_area = $counter_area
 
 var atCounter = false
-var dish = preload("res://scenes/dishware.tscn")
+var dish = preload("res://scenes/objects/dishware.tscn")
 
 func _on_counter_area_body_entered(body: Node2D) -> void:
 	# check if the player entered the area of the counter

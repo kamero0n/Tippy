@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://2n4i5skwgm8u"]
+
+[ext_resource type="Texture2D" uid="uid://tyjd6msr5rvx" path="res://assets/UI/dialog_box.png" id="1_femhf"]
+[ext_resource type="FontFile" uid="uid://cj5gjh0cn8bvt" path="res://assets/UI/m5x7.ttf" id="2_atlv4"]
+
+[node name="DialogManager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="dialogBox" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.531
+anchor_top = 1.0
+anchor_right = 0.531
+anchor_bottom = 1.0
+offset_left = -348.1
+offset_top = -264.0
+offset_right = 347.9
+offset_bottom = -52.0
+metadata/_edit_group_ = true
+
+[node name="TextureRect" type="TextureRect" parent="dialogBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_femhf")
+expand_mode = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="dialogBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 16.0
+offset_right = -29.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("2_atlv4")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "hello
+"

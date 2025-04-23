@@ -2,46 +2,44 @@ extends Node2D
 
 @onready var arrow_sprite = $Sprite2D
 
-var height = 3.0
-var speed = 4.0
-var init_pos = Vector2
+var height = 2.0
+var speed = 2.0
+var initial_position = Vector2()
 
-# ref to target
-var target_customer = null
+# refs
 var player = null
+var camera = null
+
+var edge_offset = 50
+var arrow_y = 100
+
 
 func _ready() -> void:
+	# get init pos
 	visible = false
 	
+func _physics_process(delta: float) -> void:
+	var canvas = get_canvas_transform()
+	var top_left = -canvas.origin / canvas.get_scale()
+	var size = get_viewport_rect().size / canvas.get_scale()
+	
+	set_marker_position(Rect2(top_left, size))
+	set_marker_rotation()
+
 func _process(delta: float) -> void:
-	# only show and update if we have a target
-	if target_customer == null or player == null:
-		visible = false
-		return
+	# add bobbing effect
+	var bob = sin(Time.get_ticks_msec() * 0.001 * speed) * height
+	position = initial_position + Vector2(0, bob)
+	
+func set_marker_position(bounds: Rect2):
+	arrow_sprite.global_position.x = clamp(global_position.x, bounds.position.x, bounds.end.x)
+	arrow_sprite.global_position.y = clamp(global_position.y, bounds.position.y, bounds.end.y)
+	
+	if bounds.has_point(global_position):
+		hide()
+	else:
+		show()
 		
-	var camera = player.get_node("Camera2D")
-	var screen_size = get_viewport_rect().size
-	var target_position = target_customer.global_position
-	
-	var camera_pos = camera.get_screen_center_position()
-	
-	# calc screen bounds
-	var screen_left = camera_pos.x - screen_size.x/2
-	var screen_right = camera_pos.x + screen_size.x/2
-	var screen_top = camera_pos.y - screen_size.y/2
-	var screen_bottom = camera_pos.y + screen_size.y/2
-	
-	# check if customer is visible on screen
-	if(target_position.x >= screen_left and
-		target_position.x <= screen_right and
-		target_position.y >= screen_top and 
-		target_position.y <= screen_bottom):
-		visible = false
-		return
-	
-	visible = true
-	
-	# calc direction to target
-	var dir = (target_position - player.global_position).normalized()
-	
-	var arrow_pos = Vector2()
+func set_marker_rotation():
+	var angle = (global_position - arrow_sprite.global_position).angle()
+	arrow_sprite.global_rotation = angle

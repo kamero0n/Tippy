@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://brqkrqfrtep2l"]
+
+[ext_resource type="PackedScene" uid="uid://2n4i5skwgm8u" path="res://scenes/ui/dialogueManager.tscn" id="1_0fik5"]
+[ext_resource type="Texture2D" uid="uid://bny3xge4kt0ur" path="res://assets/SimpleKeys/Classic/Dark/Spritesheets/E.png" id="2_ybr4o"]
+
+[node name="DialogManager" instance=ExtResource("1_0fik5")]
+
+[node name="RichTextLabel" parent="dialogBox" index="1"]
+offset_top = 21.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 35
+text = "hello MEOW MEOW MOEW MEWO MEWO MEWO MEWO MEOW MEOW MEWO"
+
+[node name="E" type="Sprite2D" parent="." index="1"]
+position = Vector2(865.391, 545.781)
+scale = Vector2(2.86948, 2.97266)
+texture = ExtResource("2_ybr4o")
+hframes = 2

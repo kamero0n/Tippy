@@ -87,7 +87,8 @@ func _physics_process(delta: float) -> void:
 	
 	# apply movement
 	if direction:
-		velocity.x = direction * curr_speed
+		var target_velocity = direction * curr_speed
+		velocity.x = lerp(velocity.x, target_velocity, 0.25)
 	
 	else:
 		velocity.x = move_toward(velocity.x, 0, curr_speed)
@@ -96,9 +97,6 @@ func _physics_process(delta: float) -> void:
 	
 	if carrying_dish:
 		tray.update_balance(delta, velocity, sprinting, direction)
-		
-	if global_position.x > 1400.0:
-		global_position.x = 1400.0
 	
 
 
