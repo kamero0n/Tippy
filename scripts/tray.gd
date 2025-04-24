@@ -64,7 +64,7 @@ func _process(delta: float) -> void:
 			drop_dish()
 		
 
-func add_dish(dish_scene):
+func add_dish(dish_instance):
 	# check if we have max dishes
 	if stacked_dishes.size() >= max_dishes:
 		print("Tray full!")
@@ -75,7 +75,7 @@ func add_dish(dish_scene):
 	curr_slide_offset = 0.0
 	
 	# create new dish instance
-	var dish = dish_scene.instantiate()
+	# var dish = dish_scene.instantiate()
 	
 	# play sound here?
 	if has_node("plate_stack_sound"):
@@ -89,17 +89,17 @@ func add_dish(dish_scene):
 	else:
 		new_tray_pos = Vector2(start_pos.x, start_pos.y - offset)
 		
-	dish.position = new_tray_pos
+	dish_instance.position = new_tray_pos
 	start_pos = new_tray_pos
 	
 	# add to our stack
-	stacked_dishes.append(dish)
+	stacked_dishes.append(dish_instance)
 	
 	# init target position
-	dish_target_positions.append(dish.position)
+	dish_target_positions.append(dish_instance.position)
 	
 	# add to scene tree
-	add_child(dish)
+	add_child(dish_instance)
 	return true
 
 func remove_top_dish():

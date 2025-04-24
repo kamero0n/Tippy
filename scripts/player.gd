@@ -111,8 +111,14 @@ func deliver_dish():
 			var dish = tray.remove_top_dish()
 			
 			if dish:
+				# store dish in customer for ref
+				customer.set_received_dish(dish)
+				
+				# check if dish type matches what was ordered
+				var dish_type = dish.get_dish_type()
+				
 				# signal customer that they received their order
-				customer.complete_order()
+				customer.complete_order(dish_type)
 				
 				# remove dish from scene
 				dish.queue_free()
@@ -125,7 +131,7 @@ func deliver_dish():
 				return
 	
 
-func _on_counter_dish_taken(dish_scene: PackedScene) -> void:
+func _on_counter_dish_taken(dish_instance) -> void:
 	# if this is the first dish, show the tray
 	if !carrying_dish:
 		tray_sprite.visible = true
@@ -140,4 +146,4 @@ func _on_counter_dish_taken(dish_scene: PackedScene) -> void:
 			tray.position = Vector2(-26.0, -53.0)
 	
 	# add as child of tray
-	tray.add_dish(dish_scene)
+	tray.add_dish(dish_instance)

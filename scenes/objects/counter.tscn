@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfpa61l6m8k68"]
+[gd_scene load_steps=7 format=3 uid="uid://cfpa61l6m8k68"]
 
 [ext_resource type="Script" uid="uid://wcc7e632mg1w" path="res://scripts/counter.gd" id="1_8e5hq"]
 [ext_resource type="Texture2D" uid="uid://dei1ptf0wnxeq" path="res://assets/misc/betterCounter.png" id="2_8e5hq"]
+[ext_resource type="FontFile" uid="uid://cj5gjh0cn8bvt" path="res://assets/UI/m5x7.ttf" id="3_12fm3"]
+[ext_resource type="Texture2D" uid="uid://cfhr0n4yeicb7" path="res://assets/glassware/spaghetPlate.png" id="4_vdb7k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sc7mx"]
 size = Vector2(75.3036, 91.0935)
@@ -28,6 +30,19 @@ shape = SubResource("RectangleShape2D_sc7mx")
 [node name="counter_collider" type="CollisionShape2D" parent="."]
 position = Vector2(2.93372, 8)
 shape = SubResource("RectangleShape2D_8e5hq")
+
+[node name="dish_label" type="Label" parent="."]
+visible = false
+offset_top = -93.0
+offset_right = 86.0
+offset_bottom = -76.0
+theme_override_fonts/font = ExtResource("3_12fm3")
+text = "meow"
+
+[node name="dish_preview" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(12.5758, -108.699)
+texture = ExtResource("4_vdb7k")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="body_entered" from="counter_area" to="." method="_on_counter_area_body_entered"]

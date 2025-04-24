@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bh2b7o1mj74cq"]
+
+[ext_resource type="Texture2D" uid="uid://0e5alcgidubf" path="res://assets/misc/npc_base.png" id="1_f5dsx"]
+
+[node name="Manager" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_f5dsx")

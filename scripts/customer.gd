@@ -19,11 +19,14 @@ var order_timer = 0
 var player_in_range = false
 var customer_type = "regular"
 
+var is_angry = false
+
 var tip_multiplier = 1.0
 var can_change_order = false
 var wrong_dish_penalty = 10.0
 
-var current_dish_type = "regular"
+var current_dish_type = "sardine_pasta" # default dish
+var received_dish = null # track dish received
 
 func _ready() -> void:
 	# hide UI
@@ -64,12 +67,16 @@ func process_customer_behavior(delta: float) -> void:
 func create_order():
 	customer_state = "has_order"
 	
+	
+	# update order bubble with dish infor if avaiable
+	if order_bubble:
+		pass
+	
 	# show only order bubble
 	order_bubble.visible = true
 	order_progress_bar.visible = false
 	
-	# set dish type
-	current_dish_type = "regular"
+	is_angry = false
 	
 	emit_signal("ordered")
 
@@ -105,12 +112,13 @@ func timeout_order():
 	emit_signal("order_timeout")
 	print("Order timed out! Angry customer!")
 	
+	is_angry = true
 	customer_state = "idle"
 
 func complete_order(dish_type = "regular"):
 	if has_active_order:
 		
-		if dish_type != current_dish_type and can_change_order:
+		if dish_type != current_dish_type or can_change_order:
 			print("wrong dish! customer wants: " + current_dish_type)
 			
 		has_active_order = false
@@ -130,7 +138,13 @@ func complete_order(dish_type = "regular"):
 		return true
 	
 	return false
-		
+
+func set_received_dish(dish):
+	received_dish = dish
+
+func get_received_dish():
+	return received_dish
+
 
 func _on_food_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
