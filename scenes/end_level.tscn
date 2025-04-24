@@ -146,7 +146,7 @@ offset_bottom = 371.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_cq6fe")
 theme_override_font_sizes/font_size = 50
-text = "Total Score:"
+text = "Total Earnings:"
 
 [connection signal="pressed" from="VBoxContainer/main" to="." method="_on_main_pressed"]
 [connection signal="pressed" from="VBoxContainer/restart" to="." method="_on_restart_pressed"]

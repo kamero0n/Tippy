@@ -1,4 +1,5 @@
 extends Node
+class_name Customer
 
 signal order_delivered(delivery_time)
 signal order_timeout
@@ -13,9 +14,16 @@ signal order_taken
 var customer_state = "idle"
 var has_active_order = false
 var order_start_time = 0
-var order_time_limit = 30
+var order_time_limit = 20
 var order_timer = 0
 var player_in_range = false
+var customer_type = "regular"
+
+var tip_multiplier = 1.0
+var can_change_order = false
+var wrong_dish_penalty = 10.0
+
+var current_dish_type = "regular"
 
 func _ready() -> void:
 	# hide UI
@@ -24,6 +32,12 @@ func _ready() -> void:
 	
 	# add customers group for players to detect
 	add_to_group("customers")
+	
+	# init based on customer type
+	initialize_customer_type()
+	
+func initialize_customer_type():
+	pass
 
 func _process(delta: float) -> void:
 	if has_active_order:
@@ -40,6 +54,12 @@ func _process(delta: float) -> void:
 	if customer_state == "has_order" and player_in_range:
 		if Input.is_action_just_pressed("take_order"):
 			start_order()
+			
+	process_customer_behavior(delta)
+
+func process_customer_behavior(delta: float) -> void:
+	pass
+
 
 func create_order():
 	customer_state = "has_order"
@@ -47,6 +67,9 @@ func create_order():
 	# show only order bubble
 	order_bubble.visible = true
 	order_progress_bar.visible = false
+	
+	# set dish type
+	current_dish_type = "regular"
 	
 	emit_signal("ordered")
 
@@ -81,9 +104,15 @@ func timeout_order():
 	# emit timeout signal 
 	emit_signal("order_timeout")
 	print("Order timed out! Angry customer!")
+	
+	customer_state = "idle"
 
-func complete_order():
+func complete_order(dish_type = "regular"):
 	if has_active_order:
+		
+		if dish_type != current_dish_type and can_change_order:
+			print("wrong dish! customer wants: " + current_dish_type)
+			
 		has_active_order = false
 		customer_state = "idle"
 		

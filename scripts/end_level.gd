@@ -35,12 +35,13 @@ func update_score_display():
 	
 	tips.text = "Tips Earned: $" + format_tips
 	dishes.text = "Dishes Broken: " + str(dishes_broken)
-	score.text = "Final Score: $" + format_score
+	score.text = "Total Earnings: $" + format_score
 
 
 func _on_main_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
-
-
+	var scene_manager = get_node("/root/SceneManager")
+	scene_manager.change_scene("res://scenes/main_menu.tscn")
+	
 func _on_restart_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/tippy_test.tscn")
+	var scene_manager = get_node("/root/SceneManager")
+	scene_manager.change_scene("res://scenes/test/tippy_test.tscn")

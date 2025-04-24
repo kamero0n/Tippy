@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dk30emhyc8iv6"]
+
+[ext_resource type="Script" uid="uid://mkf18ga1evyg" path="res://scripts/scene_manager.gd" id="1_b81s6"]
+[ext_resource type="PackedScene" uid="uid://bwdks6foo6jej" path="res://scenes/ui/TransitionScreen.tscn" id="3_h7lqg"]
+
+[node name="SceneManager" type="Node2D"]
+script = ExtResource("1_b81s6")
+
+[node name="CurrentScene" type="Node" parent="."]
+
+[node name="TransitionScreen" parent="." instance=ExtResource("3_h7lqg")]
+layer = 0
+
+[connection signal="transitioned" from="TransitionScreen" to="." method="_on_transition_screen_transitioned"]

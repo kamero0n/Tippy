@@ -1,15 +1,16 @@
-[gd_scene load_steps=11 format=4 uid="uid://bjfjj6q88n3m1"]
+[gd_scene load_steps=12 format=4 uid="uid://bjfjj6q88n3m1"]
 
 [ext_resource type="Script" uid="uid://bamx2cn42c37g" path="res://scripts/game_manager.gd" id="1_r8nir"]
 [ext_resource type="Texture2D" uid="uid://c01nnxsc8w03i" path="res://assets/misc/background.png" id="2_xgpx7"]
 [ext_resource type="PackedScene" uid="uid://b3qmoechdtco3" path="res://scenes/character/customer.tscn" id="3_rg4j1"]
 [ext_resource type="PackedScene" uid="uid://btabfijb1ieil" path="res://scenes/character/player.tscn" id="4_66k0y"]
+[ext_resource type="Script" uid="uid://5cnyligethch" path="res://scripts/customer_types/octopus.gd" id="4_xgpx7"]
 [ext_resource type="Texture2D" uid="uid://dsfic81tatyuo" path="res://assets/tileset/world_tileset_tippy.png" id="5_lk6jm"]
 [ext_resource type="PackedScene" uid="uid://cfpa61l6m8k68" path="res://scenes/objects/counter.tscn" id="6_b03au"]
 [ext_resource type="PackedScene" uid="uid://eig3kqs6pya2" path="res://scenes/ui/ui.tscn" id="7_ho3y4"]
 [ext_resource type="Script" uid="uid://cjgxctsigqeqr" path="res://scripts/customer_manager.gd" id="8_cydvb"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wixx3"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r8nir"]
 texture = ExtResource("5_lk6jm")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -76,7 +77,7 @@ texture = ExtResource("5_lk6jm")
 
 [sub_resource type="TileSet" id="TileSet_l42us"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_wixx3")
+sources/0 = SubResource("TileSetAtlasSource_r8nir")
 
 [node name="game_manager" type="Node2D"]
 texture_filter = 1
@@ -98,6 +99,7 @@ position = Vector2(217, 162)
 
 [node name="customer2" parent="customers" instance=ExtResource("3_rg4j1")]
 position = Vector2(558, 160)
+script = ExtResource("4_xgpx7")
 
 [node name="customer3" parent="customers" instance=ExtResource("3_rg4j1")]
 position = Vector2(917, 163)
@@ -113,7 +115,7 @@ position = Vector2(287, 202)
 
 [node name="Camera2D" type="Camera2D" parent="tippy"]
 position = Vector2(24, -98)
-zoom = Vector2(2, 2)
+zoom = Vector2(3, 3)
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0

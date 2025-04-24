@@ -13,6 +13,11 @@ var active_orders = 0
 var next_order_timer = 0.0
 var level_active = false
 
+# track customer types
+var shark_customers = []
+var octopus_customers = []
+var regular_customers = []
+
 func _ready() -> void:
 	# find customers in scene
 	customers = get_tree().get_nodes_in_group("customers")
@@ -27,7 +32,7 @@ func _ready() -> void:
 	# start first order timer
 	reset_order_timer()
 	
-	
+
 func _process(delta: float) -> void:
 	if level_active:
 		# count down to next order
@@ -43,6 +48,7 @@ func _process(delta: float) -> void:
 func create_random_order():
 	# get available customers
 	var available_customers = []
+	
 	for customer in customers:
 		if customer.customer_state == "idle":
 			available_customers.append(customer)
@@ -53,8 +59,10 @@ func create_random_order():
 		var customer = available_customers[random_index]
 		customer.create_order()
 		
+		active_orders += 1
 		emit_signal("order_created", customer)
-		print("order created for customer at position ", customer.global_position)
+		# print("order created for customer at position ", customer.global_position)
+		print("order created for ", customer.customer_type, " customer at position ", customer.global_position)
 
 func reset_order_timer():
 	next_order_timer = randf_range(min_order_interval, max_order_interval)
@@ -79,6 +87,6 @@ func _on_customer_order_delivered(customer, delivery_time):
 	active_orders -= 1
 	emit_signal("order_delivered", customer, delivery_time)
 
-func _on_customer_order_timeout():
+func _on_customer_order_timeout(customer):
 	active_orders -= 1
-	emit_signal("order_timeout")
+	emit_signal("order_timeout", customer)

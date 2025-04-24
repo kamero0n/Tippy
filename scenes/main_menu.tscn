@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ddwgpsdr24oji"]
+[gd_scene load_steps=8 format=3 uid="uid://ddwgpsdr24oji"]
 
 [ext_resource type="Script" uid="uid://cflut8agjinsq" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="FontFile" uid="uid://cj5gjh0cn8bvt" path="res://assets/UI/m5x7.ttf" id="1_l6cm7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wu84c"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l6cm7"]
 
@@ -39,13 +41,13 @@ grow_vertical = 2
 script = ExtResource("1_ekxnf")
 
 [node name="Panel" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wu84c")
 
 [node name="Start" type="Button" parent="."]
 layout_mode = 1

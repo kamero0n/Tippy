@@ -34,9 +34,9 @@ tooltip_text = "
 
 [node name="dishes_label" type="RichTextLabel" parent="dishes_delivered"]
 layout_mode = 0
-offset_left = -13.5
+offset_left = -14.5
 offset_top = -0.5
-offset_right = 26.5
+offset_right = 25.5
 offset_bottom = 39.5
 theme_override_fonts/normal_font = ExtResource("2_f5cxw")
 text = "nom"
@@ -46,12 +46,12 @@ autowrap_mode = 0
 
 [node name="Label" type="Label" parent="dishes_delivered"]
 layout_mode = 0
-offset_left = -49.0
+offset_left = -64.5
 offset_top = -0.5
-offset_right = -9.0
+offset_right = -18.5
 offset_bottom = 22.5
 theme_override_fonts/font = ExtResource("2_f5cxw")
-text = "Score:"
+text = "Earnings:"
 
 [node name="notepad" type="Control" parent="."]
 visible = false

@@ -11,7 +11,7 @@ var min_tip_amount = 5.0
 var tip_deduction_per_second = 0.5
 var dish_break_penalty = 5.0
 
-var level_duration = 60.0
+var level_duration = 20.0
 var level_timer = null
 var level_started = false
 var level_ended = false
@@ -87,7 +87,8 @@ func _on_level_timeout():
 	global.final_score = score
 	
 	# change scene
-	get_tree().change_scene_to_file("res://scenes/end_level.tscn")
+	#var scene_manager = get_node("/root/SceneManager")
+	#scene_manager.change_scene("res://scenes/end_level.tscn")
 	
 
 func _on_customer_order_taken(customer):
@@ -108,7 +109,11 @@ func _on_order_delivered(customer, delivery_time):
 	var tip = base_tip_amount
 	
 	# deduct time based on time it took 
-	tip -= delivery_time * tip_deduction_per_second
+	# tip -= delivery_time * tip_deduction_per_second
+	
+	# apply customer-specific tip multiplier
+	if customer.has_method("get_tip_multiplier"):
+		tip *= customer.tip_multiplier
 	
 	# ensure tip is w/in range
 	tip = clamp(tip, min_tip_amount, max_tip_amount)
