@@ -46,15 +46,22 @@ func update_score_display():
 
 
 func _on_main_pressed() -> void:
+		
+	$"AudioStreamPlayer2D".play()
 	var scene_manager = get_node("/root/SceneManager")
 	scene_manager.change_scene("res://scenes/main_menu.tscn")
+
 	
 func _on_restart_pressed() -> void:
+		
+	$"AudioStreamPlayer2D".play()
 	var scene_manager = get_node("/root/SceneManager")
 	scene_manager.change_scene("res://scenes/test/tippy_test.tscn")
 
 
 func _on_next_level_pressed() -> void:
+		
+	$"AudioStreamPlayer2D".play()
 	var global = get_node("/root/Global")
 	global.current_level += 1
 	

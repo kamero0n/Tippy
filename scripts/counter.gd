@@ -19,16 +19,22 @@ var dish_types = {
 		"price": 15.0,
 		"weight": 0.9,
 		"description": "Caviar with Coral"
+	},
+	"toasted_mackerel": {
+		"price": 12.0,
+		"weight": 1.2,
+		"description": "Toasted Mackerel"
 	}
 }
 
 var preview_sprites = {
-	"sardine_pasta": preload("res://assets/glassware/spaghetPlate.png"),
-	"caviar_coral": preload("res://assets/glassware/wineCup.png")
+	"sardine_pasta": preload("res://assets/glassware/sardine_pasta.png"),
+	"caviar_coral": preload("res://assets/glassware/caviar_coral.png"),
+	"toasted_mackerel": preload("res://assets/glassware/toasted_mackerel.png")
 }
 
 var curr_dish_index = 0
-var dish_keys = ["sardine_pasta", "caviar_coral"]
+var dish_keys = ["sardine_pasta", "caviar_coral", "toasted_mackerel"]
 
 func _ready() -> void:
 	if has_node("dish_label"):

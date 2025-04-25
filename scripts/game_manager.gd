@@ -22,7 +22,7 @@ var score_label = "0"
 
 # dishes of the day system
 var dishes_of_the_day = []
-var all_available_dishes = ["sardine_pasta", "caviar_coral"]
+var all_available_dishes = ["sardine_pasta", "caviar_coral", "toasted_mackerel"]
 
 
 @onready var customer_manager = $customer_manager
@@ -46,11 +46,7 @@ func _ready():
 	
 	# get ref to score label
 	score_label = $UI/dishes_delivered/dishes_label
-	
-	# connect signals
-	if counter:
-		counter.connect("dish_taken", _on_dish_taken)
-	
+
 	if customer_manager:
 		customer_manager.connect("order_delivered", _on_order_delivered)
 		customer_manager.connect("order_timeout", _on_order_timeout)
@@ -59,7 +55,14 @@ func _ready():
 	# set up dishes of the day
 	setup_dishes_of_the_day()
 	
-	var tutorial_manager = $TutorialManager
+		
+	# connect signals
+	if counter:
+		counter.connect("dish_taken", _on_dish_taken)
+		counter.update_available_dishes(dishes_of_the_day)
+	
+	
+	var tutorial_manager = get_node_or_null("TutorialManager")
 	if tutorial_manager and level_timer and $UI/timer_node:
 		in_tutorial_mode = true
 		$UI/timer_node.visible = false
@@ -92,7 +95,11 @@ func start_level():
 
 func setup_dishes_of_the_day():
 	# change this later to be dependent on level data
-	dishes_of_the_day = all_available_dishes.duplicate()
+	var global = get_node("/root/Global")
+	if global.current_level == 0:
+		dishes_of_the_day = ["sardine_pasta", "caviar_coral"]
+	else:
+		dishes_of_the_day = all_available_dishes.duplicate()
 	
 	# if counter exists, update its dish types to match dishes of the day
 	if counter:
@@ -105,7 +112,7 @@ func _on_level_timeout():
 	
 	customer_manager.stop()
 	
-	print("level time ended!")
+	# print("level time ended!")
 	
 	var global = get_node("/root/Global")
 	global.tips_earned = total_tips_earned
@@ -118,10 +125,30 @@ func _on_level_timeout():
 	
 
 func _on_customer_order_taken(customer):
+	var tutorial_manager = get_node_or_null("TutorialManager")
+	var skip_dish_assignment = false
+	
+	if tutorial_manager and in_tutorial_mode:
+		if tutorial_manager.tutorial_customer == customer:
+			skip_dish_assignment = true
+	
 	# assign random dish type from dishes of the day
-	if dishes_of_the_day.size() > 0:
+	if dishes_of_the_day.size() > 0 and not skip_dish_assignment:
 		var random_dish = dishes_of_the_day[randi() % dishes_of_the_day.size()]
-		customer.current_dish_type = random_dish
+		
+		# print("Assigning dish: " + random_dish + " to customer: " + str(customer))
+		
+		if customer.has_method("set_order_dish_type"):
+			customer.set_order_dish_type(random_dish)
+			if customer.has_method("update_order_bubble"):
+				customer.update_order_bubble()
+			
+		else:
+			customer.current_dish_type = random_dish
+			
+			if customer.has_method("update_order_bubble"):
+				customer.update_order_bubble()
+			
 	
 	
 	# print("player took the order!")
@@ -183,9 +210,10 @@ func _on_order_timeout(customer):
 	
 	# add penalty (should be the same...as breaking a plate?)
 	# score -= dish_break_penalty
+	score = max(0.0, score - dish_break_penalty)
 	
 	# update the score
-	# update_score()
+	update_score()
 	
 	emit_signal("order_failed", customer)
 	

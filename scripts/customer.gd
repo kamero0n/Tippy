@@ -11,6 +11,14 @@ signal order_taken
 @onready var order_bubble = $orderBubble
 @onready var order_progress_bar = $orderProgressBar
 @onready var animatedSprite = $AnimatedSprite2D
+@onready var order_sfx = $order_sfx
+@onready var angry_sfx = $angry_sfx
+
+var order_bubble_sprites = {
+	"sardine_pasta": preload("res://assets/glassware/sardine_pasta.png"),
+	"caviar_coral": preload("res://assets/glassware/caviar_coral.png"),
+	"toasted_mackerel": preload("res://assets/glassware/toasted_mackerel.png")
+}
 
 var customer_state = "idle"
 var has_active_order = false
@@ -25,6 +33,8 @@ var is_angry = false
 var tip_multiplier = 1.0
 var can_change_order = false
 var wrong_dish_penalty = 10.0
+
+var order_assigned = false
 
 var current_dish_type = "sardine_pasta" # default dish
 var received_dish = null # track dish received
@@ -74,8 +84,12 @@ func process_customer_behavior(delta: float) -> void:
 func create_order():
 	customer_state = "has_order"
 	
+	if not order_assigned:
+		pass
+	
 	# Update order bubble with dish info if available
 	if order_bubble:
+		update_order_bubble()
 		order_bubble.visible = true
 	
 	if order_progress_bar:
@@ -83,11 +97,20 @@ func create_order():
 	
 	is_angry = false
 	
+	if order_sfx:
+		order_sfx.play()
+		
+	
 	emit_signal("ordered")
 
 func start_order():
 	if customer_state == "has_order":
 		customer_state = "waiting_for_food"
+		
+		# Make sure current_dish_type is properly set before activating the order
+		if not current_dish_type or current_dish_type == "":
+			# Set default if none assigned
+			current_dish_type = "sardine_pasta"
 		
 		has_active_order = true
 		order_timer = order_time_limit
@@ -146,6 +169,7 @@ func _update_progress_bar():
 
 func timeout_order():
 	has_active_order = false
+	order_assigned = false
 	
 	# hide UI
 	if order_bubble:
@@ -154,8 +178,11 @@ func timeout_order():
 		order_progress_bar.visible = false
 	
 	# emit timeout signal 
-	emit_signal("order_timeout")
-	print("Order timed out! Angry customer!")
+	emit_signal("order_timeout", self)
+	# print("Order timed out! Angry customer!")
+	
+	if angry_sfx:
+		angry_sfx.play()
 	
 	is_angry = true
 	customer_state = "idle"
@@ -163,11 +190,22 @@ func timeout_order():
 func complete_order(dish_type = "regular"):
 	if has_active_order:
 		
+		 # Print current state for debugging
+		# print("Customer " + str(get_instance_id()) + " received: " + dish_type + ", ordered: " + current_dish_type)
+		
 		if dish_type != current_dish_type and not can_change_order:
-			print("wrong dish! customer wants: " + current_dish_type)
+			# print("wrong dish! customer wants: " + current_dish_type + ", got: " + dish_type)
+			if angry_sfx:
+				angry_sfx.play()
+			is_angry = true
+		else:
+			# Add confirmation of correct order
+			# print("Correct dish delivered!")
+			is_angry = false
 			
 		has_active_order = false
 		customer_state = "idle"
+		order_assigned = false
 		
 		# hide UI
 		if order_bubble:
@@ -180,7 +218,7 @@ func complete_order(dish_type = "regular"):
 		
 		# emit signal w/ delivery time
 		emit_signal("order_delivered", self, delivery_time)
-		print("Completed order in " + str(delivery_time) + " sec")
+		# print("Completed order in " + str(delivery_time) + " sec")
 	
 		return true
 	
@@ -191,7 +229,24 @@ func set_received_dish(dish):
 
 func get_received_dish():
 	return received_dish
+	
+func set_order_dish_type(dish_type):
+	if not order_assigned:
+		current_dish_type = dish_type
+		update_order_bubble()
+		order_assigned = true
+		# Add debug print to track dish assignments
+		# print("Customer " + str(get_instance_id()) + " ordered: " + current_dish_type)
 
+func update_order_bubble():
+	if order_bubble and order_bubble_sprites.has(current_dish_type):
+		order_bubble.texture = order_bubble_sprites[current_dish_type]
+		# Debug to verify bubble update
+		# print("Set bubble to: " + current_dish_type)
+	else:
+		# Debug if sprites are missing
+		if order_bubble:
+			print("Warning: Missing sprite for " + current_dish_type)
 
 func _on_food_area_body_entered(body: Node2D) -> void:
 	if body and body.is_in_group("player"):

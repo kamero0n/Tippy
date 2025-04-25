@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://5oh6qgwfm6ac"
+path="res://.godot/imported/bewilderment-animal-crossing-sfx-233483.mp3-7c064c7d42a98ed6cae39ad82d5864e3.mp3str"
+
+[deps]
+
+source_file="res://assets/sound effects/bewilderment-animal-crossing-sfx-233483.mp3"
+dest_files=["res://.godot/imported/bewilderment-animal-crossing-sfx-233483.mp3-7c064c7d42a98ed6cae39ad82d5864e3.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

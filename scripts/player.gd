@@ -9,12 +9,16 @@ const JUMP_VELOCITY = -400.0
 @onready var camera = $Camera2D
 @onready var tray = $tray
 @onready var tray_sprite = $tray/tray_image
+@onready var footstep_player = $footstep
 
 var curr_speed = SPEED
 
 var sprinting = false
 var carrying_dish = false
 var facing_right = false
+
+var is_walking = false
+var footstep_timer = 0.0
 
 func _ready() -> void:
 	add_to_group("player")
@@ -57,6 +61,8 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction: -1, 0, 1
 	var direction := Input.get_axis("move_left", "move_right")
 	
+	is_walking = direction != 0 and is_on_floor()
+	
 	# flip the sprite
 	if direction > 0:
 		animated_sprite.flip_h = false
@@ -90,6 +96,11 @@ func _physics_process(delta: float) -> void:
 				animated_sprite.play("walk")
 			else:
 				animated_sprite.play("carry_walk")
+				
+	if is_walking:
+		handle_footstep_sounds(delta, sprinting)
+	else:
+		footstep_timer = 0.0
 	
 	# apply movement
 	if direction:
@@ -104,7 +115,14 @@ func _physics_process(delta: float) -> void:
 	if carrying_dish:
 		tray.update_balance(delta, velocity, sprinting, direction)
 	
-
+func handle_footstep_sounds(delta: float, is_sprinting: bool ) -> void:
+	var step_interval = 0.25 if is_sprinting else 0.4
+	
+	footstep_timer += delta
+	if footstep_timer >= step_interval:
+		footstep_timer = 0.0
+		
+		footstep_player.play()
 
 func deliver_dish():
 	# check if we're near a customer w/ active order
@@ -117,6 +135,8 @@ func deliver_dish():
 			var dish = tray.remove_top_dish()
 			
 			if dish:
+				print("Delivering " + dish.get_dish_type() + " to customer who ordered " + customer.current_dish_type)
+				
 				# store dish in customer for ref
 				customer.set_received_dish(dish)
 				

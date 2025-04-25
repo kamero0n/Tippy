@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://c6dbdfmn7d86w"]
+[gd_scene load_steps=17 format=4 uid="uid://c6dbdfmn7d86w"]
 
 [ext_resource type="Script" uid="uid://bamx2cn42c37g" path="res://scripts/game_manager.gd" id="1_0lb0k"]
 [ext_resource type="Texture2D" uid="uid://c01nnxsc8w03i" path="res://assets/misc/background.png" id="2_0ihm3"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" uid="uid://cjgxctsigqeqr" path="res://scripts/customer_manager.gd" id="9_tabs0"]
 [ext_resource type="PackedScene" uid="uid://bh2b7o1mj74cq" path="res://scenes/character/manager.tscn" id="10_0ar7p"]
 [ext_resource type="PackedScene" uid="uid://dg34g5b1okwmn" path="res://scenes/tutorialManager.tscn" id="11_qmb6w"]
+[ext_resource type="PackedScene" uid="uid://bc4q1jkxlax51" path="res://scenes/objects/crate.tscn" id="13_0ot22"]
+[ext_resource type="AudioStream" uid="uid://y1kcxohefdry" path="res://assets/music/restaurant-ambience-122246.mp3" id="14_mqbka"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r8nir"]
 texture = ExtResource("6_mqbka")
@@ -140,5 +142,20 @@ scale = Vector2(0.6, 0.733)
 [node name="customer_manager" type="Node2D" parent="."]
 position = Vector2(197, -4)
 script = ExtResource("9_tabs0")
+
+[node name="Crate" parent="." instance=ExtResource("13_0ot22")]
+position = Vector2(1351, 173)
+
+[node name="Crate2" parent="." instance=ExtResource("13_0ot22")]
+position = Vector2(1360, 115)
+
+[node name="Crate3" parent="." instance=ExtResource("13_0ot22")]
+position = Vector2(1355, 58)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_mqbka")
+volume_db = -21.15
+autoplay = true
+parameters/looping = true
 
 [connection signal="dish_taken" from="Counter" to="tippy" method="_on_counter_dish_taken"]

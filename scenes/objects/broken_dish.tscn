@@ -10,3 +10,4 @@ texture = ExtResource("1_3ed62")
 
 [node name="dish_break_sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_rhdsq")
+volume_db = -19.158

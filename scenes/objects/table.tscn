@@ -1,8 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://len0r378bqub"]
+[gd_scene load_steps=5 format=3 uid="uid://len0r378bqub"]
 
 [ext_resource type="Texture2D" uid="uid://boa5ixjygdtt3" path="res://assets/misc/table.png" id="1_02ppr"]
+[ext_resource type="Texture2D" uid="uid://5867idj3s4xu" path="res://assets/misc/candle.png" id="2_ltsr6"]
+
+[sub_resource type="Gradient" id="Gradient_ym3ej"]
+offsets = PackedFloat32Array(0, 0.733333)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mju53"]
+gradient = SubResource("Gradient_ym3ej")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [node name="Area2D" type="Area2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_02ppr")
+
+[node name="candle" type="Sprite2D" parent="."]
+position = Vector2(-2, -19)
+texture = ExtResource("2_ltsr6")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-1, -19)
+color = Color(0.988235, 0.85098, 0.545098, 1)
+energy = 0.4
+texture = SubResource("GradientTexture2D_mju53")

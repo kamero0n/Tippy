@@ -45,7 +45,20 @@ func _ready() -> void:
 	#if game_manager:
 		## print("connecting to game manager")
 		#connect("dish_fallen", game_manager._on_dish_fallen)
-	pass
+		
+	var current = self
+	var game_manager = null
+	
+	while current.get_parent() != null:
+		current = current.get_parent()
+		if current.name == "game_manager" or current.get_name() == "game_manager":
+			game_manager = current
+			break
+	
+	if game_manager and game_manager.has_method("_on_dish_fallen"):
+		connect("dish_fallen", game_manager._on_dish_fallen)
+	else:
+		print("Could not find game_manager to connect dish_fallen signal")
 	
 
 func _process(delta: float) -> void:
@@ -254,20 +267,22 @@ func update_balance(delta, player_velocity, is_sprinting, direction):
 	# direction changes cause burst of imbalance
 	if direction_changed and last_move_dir != 0:
 		balance += direction_change_impact
+		
+	if direction != 0:
 	
-	# movement impact
-	var move_impact = 0.0
-	if is_sprinting:
-		move_impact = sprint_impact
-	else:
-		move_impact = walk_impact
-		
-	# apply movement impact based on number of stacked dishes
-	var stack_factor = 1.0
-	for i in range(stacked_dishes.size() - 1):
-		stack_factor *= dish_stack_multiplier
-		
-	balance += move_impact * delta * stack_factor
+		# movement impact
+		var move_impact = 0.0
+		if is_sprinting:
+			move_impact = sprint_impact
+		else:
+			move_impact = walk_impact
+			
+		# apply movement impact based on number of stacked dishes
+		var stack_factor = 1.0
+		for i in range(stacked_dishes.size() - 1):
+			stack_factor *= dish_stack_multiplier
+			
+		balance += move_impact * delta * stack_factor
 	
 	# --- RECOVER BALANCE --
 	

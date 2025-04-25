@@ -9,8 +9,14 @@ var dialog_index = 0
 var finished = false
 var current_tween = null
 
+var audio_player = AudioStreamPlayer.new()
+
 func _ready() -> void:
 	# load_dialog()
+	
+	add_child(audio_player)
+	audio_player.name = "DialogSoundPlayer"
+	audio_player.stream = preload("res://assets/sound effects/bubbles.mp3")
 	print("dialog box ready at: ", get_path())
 	
 	visible = false
@@ -25,6 +31,8 @@ func load_dialog():
 		finished = false
 		$dialogBox/RichTextLabel.text = dialog[dialog_index]
 		$dialogBox/RichTextLabel.visible_ratio = 0
+		
+		$DialogSoundPlayer.play()
 		
 		current_tween = create_tween()
 		
@@ -41,6 +49,7 @@ func load_dialog():
 		
 		visible = false
 		dialog_index = 0
+		$DialogSoundPlayer.stop()
 	
 		
 	dialog_index += 1

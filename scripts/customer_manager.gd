@@ -52,17 +52,39 @@ func create_random_order():
 	for customer in customers:
 		if customer.customer_state == "idle":
 			available_customers.append(customer)
+			
+			if available_customers.size() >= 3:
+				break
 	
 	# if we have available customers, let them order!
 	if available_customers.size() > 0:
 		var random_index = randi() % available_customers.size()
 		var customer = available_customers[random_index]
+		
+		if customer and customer.has_method("set_order_dish_type"):
+			var random_dish = get_random_dish_type()
+			customer.set_order_dish_type(random_dish)
+			
 		customer.create_order()
 		
 		active_orders += 1
 		emit_signal("order_created", customer)
 		# print("order created for customer at position ", customer.global_position)
 		print("order created for ", customer.customer_type, " customer at position ", customer.global_position)
+
+
+func get_random_dish_type():
+	var game_manager = get_node_or_null("../")
+	
+	if not game_manager or not game_manager.has_method("get") or not game_manager.get("dishes_of_the_day"):
+		# Fallback to hardcoded dish types
+		var dish_types = ["sardine_pasta", "caviar_coral", "toasted_mackerel"]
+		return dish_types[randi() % dish_types.size()]
+	
+	if game_manager.dishes_of_the_day.size() > 0:
+		return game_manager.dishes_of_the_day[randi() % game_manager.dishes_of_the_day.size()]
+	else:
+		return "sardine_pasta"
 
 func reset_order_timer():
 	next_order_timer = randf_range(min_order_interval, max_order_interval)

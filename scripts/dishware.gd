@@ -8,8 +8,9 @@ var dish_type = "sardine_pasta"
 @onready var sprite = $Sprite2D
 
 var dish_sprites = {
-	"sardine_pasta": preload("res://assets/glassware/spaghetPlate.png"),
-	"caviar_coral": preload("res://assets/glassware/wineCup.png")
+	"sardine_pasta": preload("res://assets/glassware/sardine_pasta.png"),
+	"caviar_coral": preload("res://assets/glassware/caviar_coral.png"),
+	"toasted_mackerel": preload("res://assets/glassware/toasted_mackerel.png")
 }
 
 func _ready():

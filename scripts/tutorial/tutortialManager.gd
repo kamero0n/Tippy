@@ -23,6 +23,7 @@ var tutorial_active = true
 var current_step = "intro"
 
 var tutorial_customer = null
+var tutorial_dish_type = "sardine_pasta"
 
 # dialog content
 var dialog = {
@@ -137,6 +138,11 @@ func _process(delta: float) -> void:
 			tutorial_customer = customers[0]
 			
 			if tutorial_customer != null:
+				tutorial_dish_type = "caviar_coral"
+				
+				tutorial_customer.current_dish_type = tutorial_dish_type
+				tutorial_customer.set_order_dish_type(tutorial_dish_type)
+				
 				tutorial_customer.customer_state = "has_order"
 				tutorial_customer.order_bubble.visible = true
 				tutorial_customer.has_active_order = false
@@ -144,7 +150,7 @@ func _process(delta: float) -> void:
 				tutorial_customer.emit_signal("ordered")
 				
 				# if tutorial_customer
-				
+				tutorial_customer.emit_signal("ordered")
 
 func _on_counter_area_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -168,12 +174,16 @@ func _on_order_created(customer):
 		waiting_for_order_taken = false
 		tutorial_customer = customer
 		
+		if tutorial_customer:
+			tutorial_customer.set_order_dish_type(tutorial_dish_type)
+			tutorial_customer.update_order_bubble()
+		
 		# show deliver order instructions
 		await get_tree().create_timer(0.5).timeout
 		show_dialog("deliver_order")
 
 func _on_order_delivered(customer, delivery_time = 0):
-	if waiting_for_dish_delivery and customer == tutorial_customer:
+	if customer == tutorial_customer and waiting_for_dish_delivery:
 		waiting_for_dish_delivery = false
 		
 		await get_tree().create_timer(0.5).timeout

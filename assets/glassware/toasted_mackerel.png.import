@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddhl0ggyf6yw6"
-path="res://.godot/imported/index.png-79fe1f667a65c0e02539d87320437e13.ctex"
+uid="uid://i1kmit6p514l"
+path="res://.godot/imported/toasted_mackerel.png-8df9d3743a223b864169d837d4e0bc02.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://TippyHTML/game/index.png"
-dest_files=["res://.godot/imported/index.png-79fe1f667a65c0e02539d87320437e13.ctex"]
+source_file="res://assets/glassware/toasted_mackerel.png"
+dest_files=["res://.godot/imported/toasted_mackerel.png-8df9d3743a223b864169d837d4e0bc02.ctex"]
 
 [params]
 

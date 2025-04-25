@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8uhb460rn221"
-path="res://.godot/imported/index.icon.png-872aff26131dcac32390b6a055293cc2.ctex"
+uid="uid://5867idj3s4xu"
+path="res://.godot/imported/candle.png-62bfdf4102d395343087f87868ae794a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://TippyHTML/game/index.icon.png"
-dest_files=["res://.godot/imported/index.icon.png-872aff26131dcac32390b6a055293cc2.ctex"]
+source_file="res://assets/misc/candle.png"
+dest_files=["res://.godot/imported/candle.png-62bfdf4102d395343087f87868ae794a.ctex"]
 
 [params]
 
