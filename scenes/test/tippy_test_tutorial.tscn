@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=4 uid="uid://c6dbdfmn7d86w"]
+[gd_scene load_steps=15 format=4 uid="uid://c6dbdfmn7d86w"]
 
 [ext_resource type="Script" uid="uid://bamx2cn42c37g" path="res://scripts/game_manager.gd" id="1_0lb0k"]
 [ext_resource type="Texture2D" uid="uid://c01nnxsc8w03i" path="res://assets/misc/background.png" id="2_0ihm3"]
 [ext_resource type="PackedScene" uid="uid://b3qmoechdtco3" path="res://scenes/character/customer.tscn" id="3_0ar7p"]
 [ext_resource type="Script" uid="uid://5cnyligethch" path="res://scripts/customer_types/octopus.gd" id="4_qmb6w"]
 [ext_resource type="PackedScene" uid="uid://btabfijb1ieil" path="res://scenes/character/player.tscn" id="5_0ot22"]
+[ext_resource type="PackedScene" uid="uid://b0juw4gcp7cby" path="res://scenes/character/customer_octopus.tscn" id="5_qmb6w"]
 [ext_resource type="Texture2D" uid="uid://dsfic81tatyuo" path="res://assets/tileset/world_tileset_tippy.png" id="6_mqbka"]
 [ext_resource type="PackedScene" uid="uid://cfpa61l6m8k68" path="res://scenes/objects/counter.tscn" id="7_cqoie"]
 [ext_resource type="PackedScene" uid="uid://eig3kqs6pya2" path="res://scenes/ui/ui.tscn" id="8_3vacl"]
@@ -101,6 +102,9 @@ position = Vector2(197, -4)
 [node name="customer" parent="customers" instance=ExtResource("3_0ar7p")]
 position = Vector2(217, 162)
 
+[node name="customer3" parent="customers" instance=ExtResource("5_qmb6w")]
+position = Vector2(896, 140)
+
 [node name="customer2" parent="customers" instance=ExtResource("3_0ar7p")]
 position = Vector2(558, 160)
 script = ExtResource("4_qmb6w")
@@ -115,6 +119,8 @@ position = Vector2(287, 202)
 position = Vector2(24, -98)
 zoom = Vector2(3, 3)
 process_callback = 0
+limit_left = 43
+limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 

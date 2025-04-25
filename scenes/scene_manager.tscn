@@ -10,5 +10,6 @@ script = ExtResource("1_b81s6")
 
 [node name="TransitionScreen" parent="." instance=ExtResource("3_h7lqg")]
 layer = 0
+visible = false
 
 [connection signal="transitioned" from="TransitionScreen" to="." method="_on_transition_screen_transitioned"]

@@ -16,8 +16,8 @@ func _ready() -> void:
 	visible = false
 	
 func _process(delta: float) -> void:
-	$dialogBox/E.visible = finished
-	if Input.is_action_just_pressed("interact"):
+	# $dialogBox/E.visible = finished
+	if Input.is_action_just_pressed("continue"):
 		load_dialog()
 
 func load_dialog():
@@ -46,4 +46,5 @@ func load_dialog():
 	dialog_index += 1
 	
 func _on_tween_finished():
+	$dialogBox/E.visible = true
 	finished = true

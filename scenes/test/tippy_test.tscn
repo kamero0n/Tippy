@@ -1,12 +1,14 @@
-[gd_scene load_steps=12 format=4 uid="uid://bjfjj6q88n3m1"]
+[gd_scene load_steps=14 format=4 uid="uid://bjfjj6q88n3m1"]
 
 [ext_resource type="Script" uid="uid://bamx2cn42c37g" path="res://scripts/game_manager.gd" id="1_r8nir"]
 [ext_resource type="Texture2D" uid="uid://c01nnxsc8w03i" path="res://assets/misc/background.png" id="2_xgpx7"]
 [ext_resource type="PackedScene" uid="uid://b3qmoechdtco3" path="res://scenes/character/customer.tscn" id="3_rg4j1"]
 [ext_resource type="PackedScene" uid="uid://btabfijb1ieil" path="res://scenes/character/player.tscn" id="4_66k0y"]
+[ext_resource type="PackedScene" uid="uid://b0juw4gcp7cby" path="res://scenes/character/customer_octopus.tscn" id="4_lk6jm"]
 [ext_resource type="Script" uid="uid://5cnyligethch" path="res://scripts/customer_types/octopus.gd" id="4_xgpx7"]
 [ext_resource type="Texture2D" uid="uid://dsfic81tatyuo" path="res://assets/tileset/world_tileset_tippy.png" id="5_lk6jm"]
 [ext_resource type="PackedScene" uid="uid://cfpa61l6m8k68" path="res://scenes/objects/counter.tscn" id="6_b03au"]
+[ext_resource type="PackedScene" uid="uid://b03xypwxldngc" path="res://scenes/character/customer_shark.tscn" id="6_ho3y4"]
 [ext_resource type="PackedScene" uid="uid://eig3kqs6pya2" path="res://scenes/ui/ui.tscn" id="7_ho3y4"]
 [ext_resource type="Script" uid="uid://cjgxctsigqeqr" path="res://scripts/customer_manager.gd" id="8_cydvb"]
 
@@ -97,15 +99,18 @@ position = Vector2(197, -4)
 [node name="customer" parent="customers" instance=ExtResource("3_rg4j1")]
 position = Vector2(217, 162)
 
+[node name="customer6" parent="customers" instance=ExtResource("4_lk6jm")]
+position = Vector2(557, 140)
+
 [node name="customer2" parent="customers" instance=ExtResource("3_rg4j1")]
-position = Vector2(558, 160)
+position = Vector2(810, 159)
 script = ExtResource("4_xgpx7")
 
 [node name="customer3" parent="customers" instance=ExtResource("3_rg4j1")]
-position = Vector2(917, 163)
+position = Vector2(1078, 162)
 
-[node name="customer4" parent="customers" instance=ExtResource("3_rg4j1")]
-position = Vector2(1343, 159)
+[node name="customer7" parent="customers" instance=ExtResource("6_ho3y4")]
+position = Vector2(1402, 161)
 
 [node name="customer5" parent="customers" instance=ExtResource("3_rg4j1")]
 position = Vector2(1743, 161)

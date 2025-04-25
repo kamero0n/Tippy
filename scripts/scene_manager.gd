@@ -1,6 +1,7 @@
 extends Node2D
 
 const MAIN_MENU = preload("res://scenes/main_menu.tscn")
+const TUTORIAL = preload("res://scenes/test/tippy_test_tutorial.tscn")
 const TIPPY_TEST = preload("res://scenes/test/tippy_test.tscn")
 const END_LEVEL = preload("res://scenes/end_level.tscn")
 
@@ -27,6 +28,14 @@ func change_scene(scene_path):
 	transition_screen.visible = true
 	transition_screen.transition()
 
+func change_to_level(level_number):
+	var global = get_node("/root/Global")
+	var level_path = global.get_level_path(level_number)
+	
+	if level_path:
+		change_scene(level_path)
+	else:
+		change_scene("res://scenes/main_menu.tscn")
 
 func set_current_scene(scene):
 	# remove curr scene if it exists

@@ -20,7 +20,13 @@ func _ready() -> void:
 	add_to_group("player")
 	
 	# limit the camera for left
-	camera.limit_left = global_position.x - 250
+	# camera.limit_left = global_position.x - 250
+	
+	var counter = get_node("../Counter")
+	if counter:
+		camera.limit_left = min(global_position.x - 250, counter.global_position.x)
+	else:
+		camera.limit_left = global_position.x - 250
 	
 	# hide tray
 	tray_sprite.visible = false

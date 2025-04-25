@@ -1,8 +1,75 @@
-[gd_scene load_steps=2 format=3 uid="uid://bh2b7o1mj74cq"]
+[gd_scene load_steps=12 format=3 uid="uid://bh2b7o1mj74cq"]
 
-[ext_resource type="Texture2D" uid="uid://0e5alcgidubf" path="res://assets/misc/npc_base.png" id="1_f5dsx"]
+[ext_resource type="Script" uid="uid://b73p136jc80um" path="res://scripts/manager.gd" id="1_bjfft"]
+[ext_resource type="Texture2D" uid="uid://cvpr1aflyvwvq" path="res://assets/customers/paloma-Sheet_idle.png" id="2_6on0a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcycw"]
+atlas = ExtResource("2_6on0a")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qj0hu"]
+atlas = ExtResource("2_6on0a")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_clucb"]
+atlas = ExtResource("2_6on0a")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oq3s7"]
+atlas = ExtResource("2_6on0a")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_75egd"]
+atlas = ExtResource("2_6on0a")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eyxhp"]
+atlas = ExtResource("2_6on0a")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uks16"]
+atlas = ExtResource("2_6on0a")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y867p"]
+atlas = ExtResource("2_6on0a")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vfamv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rcycw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qj0hu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_clucb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oq3s7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_75egd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eyxhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uks16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y867p")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
 
 [node name="Manager" type="Node2D"]
+script = ExtResource("1_bjfft")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_f5dsx")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vfamv")
+animation = &"idle"

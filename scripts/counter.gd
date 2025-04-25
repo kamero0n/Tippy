@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 signal dish_taken
+signal dish_cycled(dish_index)
 
 @onready var counter_area = $counter_area
 @onready var dish_preview = $dish_preview
@@ -33,7 +34,8 @@ func _ready() -> void:
 	if has_node("dish_label"):
 		update_dish_label()
 	
-	update_dish_preview()
+	if has_node("dish_preview"):
+		update_dish_preview()
 
 func update_available_dishes(available_dishes):
 	if available_dishes and available_dishes.size() > 0:
@@ -70,21 +72,23 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed("cycle_dishes"):
 			curr_dish_index = (curr_dish_index + 1) % dish_keys.size()
 			update_dish_label()
+			emit_signal("dish_cycled", curr_dish_index)
 		
 		# check if the player is pressing the interact key
 		if Input.is_action_just_pressed("pick_up"):
-			var dish_instance = dish.instantiate()
+			if dish_keys.size() > 0:
+				var dish_instance = dish.instantiate()
 			
-			# get curr dish type
-			var curr_dish_type = dish_keys[curr_dish_index]
+				# get curr dish type
+				var curr_dish_type = dish_keys[curr_dish_index]
+				
+				# set properties based on type
+				dish_instance.dish_type = curr_dish_type
+				dish_instance.price = dish_types[curr_dish_type]["price"]
+				dish_instance.weight = dish_types[curr_dish_type]["weight"]
 			
-			# set properties based on type
-			dish_instance.dish_type = curr_dish_type
-			dish_instance.price = dish_types[curr_dish_type]["price"]
-			dish_instance.weight = dish_types[curr_dish_type]["weight"]
 			
-			
-			emit_signal("dish_taken", dish_instance)
+				emit_signal("dish_taken", dish_instance)
 
 
 func update_dish_label():
@@ -100,3 +104,4 @@ func update_dish_preview():
 		var curr_dish_type = dish_keys[curr_dish_index]
 		if preview_sprites.has(curr_dish_type):
 			get_node("dish_preview").texture = preview_sprites[curr_dish_type]
+			get_node("dish_preview").visible = true

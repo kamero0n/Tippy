@@ -18,7 +18,7 @@ var level_ended = false
 
 # game state
 var score = 0
-var score_label = null
+var score_label = "0"
 
 # dishes of the day system
 var dishes_of_the_day = []
@@ -27,9 +27,9 @@ var all_available_dishes = ["sardine_pasta", "caviar_coral"]
 
 @onready var customer_manager = $customer_manager
 @onready var counter = $Counter
-@onready var tutorial_manager = $TutorialManager
 
-var in_tutorial_mode = true
+
+var in_tutorial_mode = false
 
 var total_tips_earned = 0
 var total_dishes_broken = 0
@@ -59,7 +59,14 @@ func _ready():
 	# set up dishes of the day
 	setup_dishes_of_the_day()
 	
-	if in_tutorial_mode:
+	var tutorial_manager = $TutorialManager
+	if tutorial_manager and level_timer and $UI/timer_node:
+		in_tutorial_mode = true
+		$UI/timer_node.visible = false
+		
+		if score_label:
+			score_label.text = ""
+		
 		tutorial_manager.connect("tutorial_step_completed", _on_tutorial_step_completed)
 	else:
 		# start level
@@ -106,8 +113,8 @@ func _on_level_timeout():
 	global.final_score = score
 	
 	# change scene
-	#var scene_manager = get_node("/root/SceneManager")
-	#scene_manager.change_scene("res://scenes/end_level.tscn")
+	var scene_manager = get_node("/root/SceneManager")
+	scene_manager.change_scene("res://scenes/end_level.tscn")
 	
 
 func _on_customer_order_taken(customer):
@@ -172,7 +179,7 @@ func _on_order_delivered(customer, delivery_time):
 	
 # called when order times out
 func _on_order_timeout(customer):
-	print("order time out! MAD CUSTOMER!!!")
+	# print("order time out! MAD CUSTOMER!!!")
 	
 	# add penalty (should be the same...as breaking a plate?)
 	# score -= dish_break_penalty
@@ -201,3 +208,6 @@ func _on_tutorial_step_completed(step):
 	if step == "final_step":
 		in_tutorial_mode = false
 		start_level()
+		
+		if $UI/timer_node:
+			$UI/timer_node.visible = true

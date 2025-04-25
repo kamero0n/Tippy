@@ -76,6 +76,21 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_qq22q")
 theme_override_styles/normal = SubResource("StyleBoxFlat_82l3d")
 text = "Main Menu"
 
+[node name="next_level" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_cq6fe")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3bg3w")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s2hyi")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qq22q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_82l3d")
+text = "Next Level"
+
 [node name="restart" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
@@ -149,4 +164,5 @@ theme_override_font_sizes/font_size = 50
 text = "Total Earnings:"
 
 [connection signal="pressed" from="VBoxContainer/main" to="." method="_on_main_pressed"]
+[connection signal="pressed" from="VBoxContainer/next_level" to="." method="_on_next_level_pressed"]
 [connection signal="pressed" from="VBoxContainer/restart" to="." method="_on_restart_pressed"]
