@@ -7,3 +7,4 @@ stream = ExtResource("1_gvwq5")
 volume_db = -30.783
 autoplay = true
 stream_paused = true
+parameters/looping = true
