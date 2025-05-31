@@ -26,7 +26,7 @@ this is probably just me, but i thought when joining the game jam "yeah, i mean 
 
 when i learned unity, i took time to figure out how to navigate it, and play around. i did NOT do this for godot, and i should've. well, i guess now i did, but from the results of the game jam, i think it shows that i need to take my time with things, and kill my cockiness. i think it's mainly for  game jams, since you really want to focus on making the game, and not so much fighting/learning EVERYTHING about the game engine you are simply using.
 
-i think what i should've done is used unity or use javascript (and just figure out sprite anim imports). all in all, i just need to get used to the basics of any engine before using it for a game jam for my game.
+i think what i should've done is used unity or javascript (and just figure out sprite anim imports). all in all, i just need to get used to the basics of any engine before using it for a game jam for my game.
 
 ## Learning 3: Don't put your eggs in one basket (is that how that saying goes...)
 i had drawn out the characters for my game on a notebook, and i thought it would be fun to see them in pixel art form. i was just learning aesprite, so designing characters in aesprite would be even more fun. and it was! except i had gotten so distracted/into character design, that i honestly neglected much of the design of the rest of the game and the programming for it. this is likely because i was already struggling w/ the engine, i just wanted to be able to do something i sort of knew how to do. it WAS my first time using aesprite, but i got used to it since the documentation was really easy to follow (and there's not too much to it). 
