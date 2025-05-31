@@ -28,7 +28,7 @@ when i learned unity, i took time to figure out how to navigate it, and play aro
 
 i think what i should've done is used unity or javascript (and just figure out sprite anim imports). all in all, i just need to get used to the basics of any engine before using it for a game jam for my game.
 
-## Learning 3: Don't put your eggs in one basket (is that how that saying goes...)
+## Learning 3: Don't put your eggs all in one basket (is that how that saying goes...)
 i had drawn out the characters for my game on a notebook, and i thought it would be fun to see them in pixel art form. i was just learning aesprite, so designing characters in aesprite would be even more fun. and it was! except i had gotten so distracted/into character design, that i honestly neglected much of the design of the rest of the game and the programming for it. this is likely because i was already struggling w/ the engine, i just wanted to be able to do something i sort of knew how to do. it WAS my first time using aesprite, but i got used to it since the documentation was really easy to follow (and there's not too much to it). 
 
 but yeah, i spent too much time on it, wanting to at least make cute characters (although my environment props could DEF use work). i think that's the other thing was over-complicating the environment and characters -- i had such a picture in my head of how i wanted things to look that i did not estimate time correctly nor realize my perfectionism slows me down... significantly. next time, i think i want to be able to cut out time for art AFTER i have the programming down (at least for game jams, to spend my time wisely).
